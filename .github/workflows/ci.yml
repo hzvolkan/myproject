@@ -56,13 +56,14 @@ jobs:
       - name: Coverage Sonuçlarını Yükle
         uses: codecov/codecov-action@v3
         with:
+          token: d29e9f45-968b-4985-9362-5fa83dc7b595
           file: backend/coverage.xml
           fail_ci_if_error: true
 
     env:
       DJANGO_SETTINGS_MODULE: backend.settings
       DATABASE_NAME: sosyalmedya_db
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: password
       DATABASE_HOST: localhost
       DATABASE_PORT: 5432
