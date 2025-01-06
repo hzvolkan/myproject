@@ -47,6 +47,7 @@ jobs:
     - name: Django Migration ve Testler
       run: |
         source venv/bin/activate
+        cd backend  # Doğru dizine geçiyoruz!
         python manage.py makemigrations
         python manage.py migrate
         python manage.py test
@@ -56,4 +57,4 @@ jobs:
         DATABASE_USER: postgres
         DATABASE_PASSWORD: password
         DATABASE_HOST: localhost
-        DATABASE_PORT: 5432 
+        DATABASE_PORT: 5432
