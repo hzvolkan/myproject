@@ -53,17 +53,16 @@ jobs:
           coverage run --source='.' manage.py test
           coverage xml
 
-      - name: Coverage Sonuçlarını Yükle
-        uses: codecov/codecov-action@v3
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          token: d29e9f45-968b-4985-9362-5fa83dc7b595
-          file: backend/coverage.xml
+          slug: hzvolkan/myproject
           fail_ci_if_error: true
 
     env:
       DJANGO_SETTINGS_MODULE: backend.settings
       DATABASE_NAME: sosyalmedya_db
       DATABASE_USER: postgres
-      DATABASE_PASSWORD: password
+      DATABASE_PASSWORD: postgres
       DATABASE_HOST: localhost
       DATABASE_PORT: 5432
