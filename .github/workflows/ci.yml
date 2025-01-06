@@ -44,10 +44,13 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt
 
+    - name: **Proje Dizinine Geçiş Yap (Backend)**
+      run: cd backend
+
     - name: Django Migration ve Testler
       run: |
         source venv/bin/activate
-        cd backend  # Doğru dizine geçiyoruz!
+        cd backend  # Dizin geçişi tekrar kontrol edildi
         python manage.py makemigrations
         python manage.py migrate
         python manage.py test
