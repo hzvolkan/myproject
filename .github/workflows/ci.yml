@@ -57,6 +57,7 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           slug: hzvolkan/myproject
+          file: backend/coverage.xml
           fail_ci_if_error: true
 
     env:
