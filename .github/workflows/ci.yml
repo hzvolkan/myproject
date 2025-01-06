@@ -1,4 +1,4 @@
-name: Django CI/CD Pipeline
+name: Django CI/CD Pipeline with Coverage
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
         env:
           POSTGRES_DB: sosyalmedya_db
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: password
         ports:
           - 5432:5432
         options: >-
@@ -44,17 +44,25 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Django Migration ve Testler
+      - name: Django Migration ve Testler + Coverage
         run: |
           source venv/bin/activate
-          cd backend  # Dizin değiştirildi
+          cd backend
           python manage.py makemigrations
           python manage.py migrate
-          python manage.py test
-        env:
-          DJANGO_SETTINGS_MODULE: backend.settings
-          DATABASE_NAME: sosyalmedya_db
-          DATABASE_USER: postgres
-          DATABASE_PASSWORD: password
-          DATABASE_HOST: localhost
-          DATABASE_PORT: 5432
+          coverage run --source='.' manage.py test
+          coverage xml
+
+      - name: Coverage Sonuçlarını Yükle
+        uses: codecov/codecov-action@v3
+        with:
+          file: backend/coverage.xml
+          fail_ci_if_error: true
+
+    env:
+      DJANGO_SETTINGS_MODULE: backend.settings
+      DATABASE_NAME: sosyalmedya_db
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 5432
