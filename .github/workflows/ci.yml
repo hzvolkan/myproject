@@ -30,34 +30,31 @@ jobs:
           --health-retries 5
 
     steps:
-    - name: Reposu Klonla
-      uses: actions/checkout@v3
+      - name: Reposu Klonla
+        uses: actions/checkout@v3
 
-    - name: Python Kurulumu
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.11
+      - name: Python Kurulumu
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.11
 
-    - name: Bağımlılıkları Kur
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
+      - name: Bağımlılıkları Kur
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
 
-    - name: **Proje Dizinine Geçiş Yap (Backend)**
-      run: cd backend
-
-    - name: Django Migration ve Testler
-      run: |
-        source venv/bin/activate
-        cd backend  # Dizin geçişi tekrar kontrol edildi
-        python manage.py makemigrations
-        python manage.py migrate
-        python manage.py test
-      env:
-        DJANGO_SETTINGS_MODULE: backend.settings
-        DATABASE_NAME: sosyalmedya_db
-        DATABASE_USER: postgres
-        DATABASE_PASSWORD: password
-        DATABASE_HOST: localhost
-        DATABASE_PORT: 5432
+      - name: Django Migration ve Testler
+        run: |
+          source venv/bin/activate
+          cd backend  # Dizin değiştirildi
+          python manage.py makemigrations
+          python manage.py migrate
+          python manage.py test
+        env:
+          DJANGO_SETTINGS_MODULE: backend.settings
+          DATABASE_NAME: sosyalmedya_db
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: password
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
